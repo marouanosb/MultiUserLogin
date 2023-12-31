@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h)k_0$7)^=e#c=*j)55f&md++kh$##i-bq%__q=!=gw2i3a)fa'
+SECRET_KEY = 'django-insecure-o6^xy5($ly06!rksg_%d1oe=akwy%j(wm-pvayodv$5%s16@j('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,12 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +124,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#   for crispy to work with bs4
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+#   Utilise le nouveau modèle de User au lieu de celui par défaut
+AUTH_USER_MODEL = "users.User"
+
+
+LOGIN_REDIRECT_URL = 'profile'
+LOGIN_URL = 'login'
