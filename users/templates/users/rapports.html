@@ -2,9 +2,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+
 <h2>Page des rapports</h2>
 <p>Aucun rapport disponible.</p>
+
 {% if user.type == 'PSYCHOLOGUE' %}
 <button>Ajouter un rapport</button>
 {% endif %}
+
 {% endblock content %}

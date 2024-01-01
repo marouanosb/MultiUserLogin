@@ -7,4 +7,5 @@ from django.contrib.auth.admin import UserAdmin
 admin.site.register(User)
 admin.site.register(Cours)
 admin.site.register(Rapport)    
-####    FIX PASSWORD NOT HASHING admin.site.register(User, UserAdmin)
+
+####    FIX PASSWORD NOT HASHING IN DJANGO ADMIN admin.site.register(User, UserAdmin)
