@@ -1,7 +1,7 @@
 # MultiUserLogin
 Multi-user login system using Django.
 
-# Exampple users :
+# Example users :
 ## Utilisateurs :
 ```
 username = jesuisetudiant1
