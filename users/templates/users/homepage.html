@@ -1,0 +1,14 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+{% if request.user.is_authenticated %} <!--check if user is logged in-->
+<p>
+    Bienvenue <b>{{user.username}}</b>, vous êtes connecté en tant que <b>{{ user.type }}</b>.
+</p>
+{% else %}
+<p>
+    Bienvenue, veuillez vous <a href="{% url 'login' %}">connecter</a>.
+</p>
+{% endif %}
+
+{% endblock content %}

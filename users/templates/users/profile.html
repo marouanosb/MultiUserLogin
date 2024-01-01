@@ -1,8 +1,0 @@
-<p>
-    Bienvenue <b>{{user.username}}</b>, vous êtes connecté en tant que <b>{{ user.type }}</b>
-</p>
-<br>
-<form action="{% url 'logout' %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" class="nav-item nav-link" value="Logout">
-  </form>

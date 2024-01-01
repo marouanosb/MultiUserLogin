@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import Group
 
 # Create your models here.
 class User(AbstractUser):
@@ -44,7 +46,14 @@ class Educateur(User):
         #   si l'utilisateur n'existe pas (n'a pas de primary key)
         if not self.pk:
             self.type = User.Types.EDUCATEUR
-        return super().save(*args,**kwargs)
+        # to fix password not hashing
+        if self.password and not self.password.startswith(('pbkdf2_sha256$', 'bcrypt$', 'argon2')):
+            self.password = make_password(self.password)
+        super().save(*args,**kwargs)
+        # Ajouter a son propre groupe pour les permission
+        educateur_group = Group.objects.get(name='educateur') 
+        educateur_group.user_set.add(self)
+        
 
 class Psychologue(User):
     objects = PsychologueManager()
@@ -53,7 +62,12 @@ class Psychologue(User):
     def save(self, *args, **kwargs):
         if not self.pk:
             self.type = User.Types.PSYCHOLOGUQE
-        return super().save(*args,**kwargs)
+        if self.password and not self.password.startswith(('pbkdf2_sha256$', 'bcrypt$', 'argon2')):
+            self.password = make_password(self.password)
+        super().save(*args,**kwargs)
+        psychologue_group = Group.objects.get(name='psychologue') 
+        psychologue_group.user_set.add(self)
+        
 
 class Utilisateur(User):
     objects = UtilisateurManager()
@@ -62,7 +76,12 @@ class Utilisateur(User):
     def save(self, *args, **kwargs):
         if not self.pk:
             self.type = User.Types.UTILISATEUR
-        return super().save(*args,**kwargs)
+        if self.password and not self.password.startswith(('pbkdf2_sha256$', 'bcrypt$', 'argon2')):
+            self.password = make_password(self.password)
+        super().save(*args,**kwargs)
+        utilisateur_group = Group.objects.get(name='utilisateur') 
+        utilisateur_group.user_set.add(self)
+        return 
 
 class Admin(User):
     objects = AdminManager()
@@ -71,6 +90,22 @@ class Admin(User):
     def save(self, *args, **kwargs):
         if not self.pk:
             self.type = User.Types.ADMIN
+        if self.password and not self.password.startswith(('pbkdf2_sha256$', 'bcrypt$', 'argon2')):
+            self.password = make_password(self.password)
         return super().save(*args,**kwargs)
+
+
+class Cours(models.Model):
+    prof = models.ForeignKey(Educateur, on_delete=models.CASCADE, related_name='prof_du_cours')
+    titre = models.CharField(max_length=50)
+    contenu = models.TextField()
+
+class Rapport(models.Model):
+    psy = models.ForeignKey(Psychologue, on_delete=models.CASCADE, related_name='psy_du_raport')
+    etudiant = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='etudiant_du_rapport')
+    contenu = models.TextField()
+
+
+
 
 

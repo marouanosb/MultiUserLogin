@@ -1,0 +1,10 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Page des cours</h2>
+<p>Aucun cours disponible.</p>
+{% if user.type == 'EDUCATEUR' %}
+<button>Ajouter un cours</button>
+{% endif %}
+{% endblock content %}

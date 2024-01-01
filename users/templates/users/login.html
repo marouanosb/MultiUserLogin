@@ -1,4 +1,7 @@
+{% extends 'users/base.html' %}
 {% load crispy_forms_tags %}
+
+{% block content %}
 
 <form method="POST">
     {% csrf_token %} <!-- required for form portection -->
@@ -11,3 +14,5 @@
         <button type="submit" class="btn btn-outline-info">Login</button>
     </div>
 </form>
+
+{% endblock content %}
